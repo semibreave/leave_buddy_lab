@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form" action="../PHP/login.php" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <button type="button" onclick="submitForm()">Login</button>
+    </form>
+    <div id="message-container"></div> <!-- The div to display the response message -->
+  </div>
+
+  <script>
+    function submitForm() {
+      // Get the form data
+      const form = document.getElementById("login-form");
+      const formData = new FormData(form);
+
+      // Create and configure the XMLHttpRequest object
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", form.action, true);
+
+      // Set up the event handler for when the AJAX request is complete
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          
+          if(xhr.responseText == "Empty"){
+            console.log(xhr.responseText);
+            document.getElementById("message-container").innerText = "Please fill username AND password";
+          }
+
+          else if(xhr.responseText == "Failed"){
+            console.log(xhr.responseText);
+            document.getElementById("message-container").innerText = "Wrong username OR password";
+          }
+
+          else{
+
+                //console.log(xhr.responseText);
+                // Redirect to "employee.html" when the response is "Passed"
+                // Extract the employee ID from the response text
+                const employeeId = xhr.responseText;
+          
+                // Construct the URL with the employee ID as a query parameter
+                const redirectUrl = `../../Employee/HTML/Employee.html?id=${encodeURIComponent(employeeId)}`;
+          
+                // Perform the redirection
+                window.location.href = redirectUrl;
+          }
+          
+        }
+      };
+
+      // Send the AJAX request with the form data
+      xhr.send(formData);
+    }
+  </script>
+</body>
+</html>

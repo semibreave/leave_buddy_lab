@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+    <link rel="stylesheet" type="text/css" href="../CSS/Employee.css">
+    
+</head>
+<body>
+    <h1>Employee Details</h1>
+    <div class="employee-details">
+        <div class="property">
+            <span class="property-label">Name:</span>
+            <span class="property-value" id="name"></span>
+        </div>
+        <div class="property">
+            <span class="property-label">ID:</span>
+            <span class="property-value" id="ID"></span>
+        </div>
+        <div class="property">
+            <span class="property-label">User Name:</span>
+            <span class="property-value" id="username"></span>
+        </div>
+        <div class="property">
+            <span class="property-label">Entitlement:</span>
+            <span class="property-value" id="entitlement"></span>
+        </div>
+        <div class="property">
+            <span class="property-label">Leave Balance:</span>
+            <span class="property-value" id="balance"></span>
+        </div>
+        <div class="property">
+            <span class="property-label">Start Date:</span>
+            <span class="property-value" id="startDate"></span>
+        </div>
+    </div>
+
+    <script type = "module">
+        
+       import {getEmployeeById} from "../JavaScript/EmployeeCreator.js"; 
+        
+       // Function to get the employee ID from the URL query parameters
+      function getEmployeeIdFromURL() {
+        const searchParams = new URLSearchParams(window.location.search);
+        return searchParams.get("id");
+      }
+
+    
+      const employeeId = getEmployeeIdFromURL();
+      
+    // Verify the employee ID against the sessionStorage value
+    const storedEmployeeId = sessionStorage.getItem("employeeId");
+    console.log(employeeId);
+    console.log(storedEmployeeId);
+
+    if (employeeId !== storedEmployeeId) {
+        alert("Invalid access. Please log in first.");
+        window.location.href = "../../Login/HTML/login.html"; // Redirect to login page
+        // return;
+    }
+
+      const employee = await getEmployeeById(employeeId);
+        
+       // Function to update the property values on the page
+        function updateEmployeeDetails() {
+            console.log(employeeId);
+            document.getElementById("name").textContent = employee.name;
+            document.getElementById("ID").textContent = employee.ID;
+            document.getElementById("startDate").textContent = employee.startDate;
+            document.getElementById("entitlement").textContent = employee.entitlement;
+            document.getElementById("balance").textContent = employee.balance;
+            
+        }
+
+        // Call the function to display initial data
+        updateEmployeeDetails();
+    
+    </script>
+</body>
+</html>

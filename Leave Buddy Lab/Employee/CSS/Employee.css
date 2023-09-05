@@ -1,0 +1,22 @@
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .employee-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .property {
+            flex-basis: 48%; /* Adjust the width as needed */
+            margin-bottom: 10px;
+        }
+
+        .property-label {
+            font-weight: bold;
+        }
+
+        .property-value {
+            margin-left: 10px;
+        }
